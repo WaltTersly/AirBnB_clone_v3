@@ -24,10 +24,15 @@ def status():
 def stats():
     """reurn dictionary count of data
     """
-    my_dict = {"amenities": storage.count(Amenity),
-               "cities": storage.count(City),
-               "places": storage.count(Place),
-               "reviews": storage.count(Review),
-               "states": storage.count(State),
-               "users": storage.count(User)}
-    return jsonify(my_dict)
+    classes = {
+        "amenities": Amenity,
+        "cities": City,
+        "places": Place,
+        "reviews": Review,
+        "states": State,
+        "users": User}
+    dictionary = {}
+    for key, cl in classes.items():
+        numb = storage.count(cl)
+        dictionary[key] = numb
+    return jsonify(dictionary)
