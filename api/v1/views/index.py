@@ -17,22 +17,16 @@ from models.user import User
 def status():
     """route to the status
     """
-    return jsonify({"status": "OK"})
+    return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """reurn dictionary count of data
     """
-    classes = {
-        "amenities": Amenity,
-        "cities": City,
-        "places": Place,
-        "reviews": Review,
-        "states": State,
-        "users": User}
-    dictionary = {}
-    for key, cl in classes.items():
-        numb = storage.count(cl)
-        dictionary[key] = numb
-    return jsonify(dictionary)
+    return jsonify({"amenities": storage.count(Amenity),
+                    "cities": storage.count(City),
+                    "places": storage.count(Place),
+                    "reviews": storage.count(Review),
+                    "states": storage.count(State),
+                    "users": storage.count(User)})
